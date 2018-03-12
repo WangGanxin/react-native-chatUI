@@ -24,7 +24,7 @@ import ModalBox from 'react-native-modalbox';
 import Line from './Line';
 import {EMOTIONS_ZHCN,invertKeyValues} from './DataSource';
 
-let emojiReg = new RegExp('\\[[^\\]]+\\]'); //表情符号正则表达式
+let emojiReg = new RegExp('\\[[^\\]]+\\]','g'); //表情符号正则表达式
 
 export default class ChatInputBar extends PureComponent {
 
@@ -167,13 +167,24 @@ export default class ChatInputBar extends PureComponent {
           if (lastChar === ']'){
 
             let castArray = preStr.match(emojiReg);
-            let cast = castArray[castArray.length - 1];
 
-            lastText = preStr.substring(0,preStr.length - cast.length) + nextStr;
+            if(!castArray){
+              let cast = castArray[castArray.length - 1];
 
-            this.setState({
-              cursorIndex:preStr.length - cast.length,
-            });
+              lastText = preStr.substring(0,preStr.length - cast.length) + nextStr;
+
+              this.setState({
+                cursorIndex:preStr.length - cast.length,
+              });
+            }
+            else{
+              lastText = preStr.substring(0,preStr.length - 1) + nextStr;
+
+              this.setState({
+                cursorIndex:preStr.length - 1,
+              });
+            }
+
           } else {
 
             lastText = preStr.substring(0,preStr.length - 1) + nextStr;
@@ -189,13 +200,23 @@ export default class ChatInputBar extends PureComponent {
         let lastChar = this.state.inputValue.charAt(currentTextLength - 1);
         if (lastChar === ']'){
           let castArray = this.state.inputValue.match(emojiReg);
-          let cast = castArray[castArray.length - 1];
 
-          lastText = this.state.inputValue.substring(0,this.state.inputValue.length - cast.length);
+          if(castArray){
+            let cast = castArray[castArray.length - 1];
+            lastText = this.state.inputValue.substring(0,this.state.inputValue.length - cast.length);
 
-          this.setState({
-            cursorIndex:this.state.inputValue.length - cast.length,
-          });
+            this.setState({
+              cursorIndex:this.state.inputValue.length - cast.length,
+            });
+          }
+          else{
+            lastText = this.state.inputValue.substring(0,this.state.inputValue.length - 1);
+
+            this.setState({
+              cursorIndex:this.state.inputValue.length - 1,
+            });
+          }
+
         }
         else {
 

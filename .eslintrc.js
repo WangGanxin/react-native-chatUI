@@ -62,7 +62,7 @@ module.exports = {
     }],
     'linebreak-style': 'off',
     'lines-around-comment': 'off',
-    'max-depth': 'error', // 强制可嵌套的块的最大深度
+    'max-depth': 'off', // 强制可嵌套的块的最大深度
     'max-nested-callbacks': 'off',
     'max-params': ['error', 4],
     'new-cap': 'off',
