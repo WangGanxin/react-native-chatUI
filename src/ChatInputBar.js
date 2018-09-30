@@ -104,7 +104,7 @@ export default class ChatInputBar extends PureComponent {
 
     let emotoins_code = invertKeyValues(EMOTIONS_ZHCN);
 
-    this.state.tempSendTxtArray.push(emotoins_code[castStr]);
+    this.state.tempSendTxtArray.push(emotoins_code[castStr[0]]);
 
     this._matchContentString(emojiStr.substring(emojiLength));
 

@@ -16,7 +16,7 @@ import {
 import {EMOTIONS_DATA} from './DataSource';
 import PropTypes from 'prop-types';
 
-let emojiReg = new RegExp('\\/\\{[a-zA-Z_]{1,18}'); //表情符号正则表达式
+let emojiReg = new RegExp('\\/\\{[a-zA-Z_]{1,14}\\}'); //表情符号正则表达式
 
 export default class RichTextWrapper extends Component {
 
@@ -70,8 +70,11 @@ export default class RichTextWrapper extends Component {
     let castStr = emojiStr.match(emojiReg);
     let emojiLength = castStr[0].length;
 
-    this.state.Views.push(<Image key={emojiStr} style={styles.subEmojiStyle} resizeMethod={'auto'} source={EMOTIONS_DATA[castStr]}/>);
+    let emojiImg=EMOTIONS_DATA[castStr[0]];
 
+    if(emojiImg){
+      this.state.Views.push(<Image key={emojiStr} style={styles.subEmojiStyle} resizeMethod={'auto'} source={emojiImg}/>);
+    }
     this._matchContentString(emojiStr.substring(emojiLength));
 
   }
